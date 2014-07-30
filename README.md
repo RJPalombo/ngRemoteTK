@@ -56,7 +56,7 @@ Example of usage
           console.log('Account: ' + JSON.stringify($scope.account));
         });
         
-        // Retrieve a record example
+        // Upsert a record example
         $scope.submit = function(){ 
           console.log('Account about to be submitted: ' + JSON.stringify($scope.account));
           ngRemoteTK.upsert('account', 'Id', acctId, $scope.account);
