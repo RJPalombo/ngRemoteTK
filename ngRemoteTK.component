@@ -1,0 +1,168 @@
+<apex:component >
+  <apex:attribute name="appNamespace" 
+                  description="Your Angular app namespace" 
+                  type="String" 
+                  required="true"/>
+  
+  <script type="text/javascript">
+    var serviceName = '{!appNameSpace}.services';
+    angular.module(serviceName, []).factory('ngRemoteTK', function($q){
+    
+      var remotTKClient = new remotetk.Client();
+
+
+      /*private functions that return Angular promises*/
+
+      //describe
+      var describeResult = {};
+      var describe = function(objtype){
+       var deferred = $q.defer();
+       remotTKClient.describe(objtype,
+              function(response){
+                  describeResult = response;
+                  deferred.resolve(describeResult);
+              },function(error){
+                  alert(JSON.stringify(error));
+                  deffered.fail(error);
+              });
+        return deferred.promise;
+      };
+
+      //create
+      var createResult = {};
+      var create = function(objtype, fields){
+       var deferred = $q.defer();
+       remotTKClient.create(objtype, fields,
+         function(response){
+           createResult = response;
+           deferred.resolve(createResult);
+         },function(error){
+            alert(JSON.stringify(error));
+          deffered.fail(error);
+         });
+         return deferred.promise;
+      };
+
+      //retrieve
+      var retrieveResult = {};
+      var retrieve = function(objtype, id, fieldlist){
+       var deferred = $q.defer();
+       remotTKClient.retrieve(objtype, id, fieldlist,
+         function(response){
+           retrieveResult = response;
+           deferred.resolve(retrieveResult);
+         },function(error){
+            alert(JSON.stringify(error));
+            deffered.fail(error);
+         });
+         return deferred.promise;
+      };
+
+      //upsert - returns null
+      var upsertResult = {};
+      var upsert = function(objtype, externalIdField, externalId, fields){
+       var deferred = $q.defer();
+       remotTKClient.upsert(objtype, externalIdField, externalId, fields,
+         function(response){
+           upsertResult = response;
+           deferred.resolve(upsertResult);
+         },function(error){
+            alert(JSON.stringify(error));
+            deffered.fail(error);
+         });
+         return deferred.promise;
+      };
+
+      //update - returns null
+      var updateResult = {};
+      var update = function(objtype, id, fields){
+       var deferred = $q.defer();
+       remotTKClient.update(objtype, id, fields,
+         function(response){
+           updateResult = response;
+           deferred.resolve(updateResult);
+         },function(error){
+            alert(JSON.stringify(error));
+            deffered.fail(error);
+         });
+         return deferred.promise;
+      };
+
+      //del
+      var delResult = {};
+      var del = function(objtype, id){
+       var deferred = $q.defer();
+       remotTKClient.del(objtype, id,
+         function(response){
+           delResult = response;
+           deferred.resolve(delResult);
+         },function(error){
+            alert(JSON.stringify(error));
+            deffered.fail(error);
+         });
+         return deferred.promise;
+      };
+
+      //query
+      var queryResult = {};
+      var query = function(soql){
+       var deferred = $q.defer();
+       remotTKClient.query(soql,
+         function(response){
+           queryResult = response;
+           deferred.resolve(queryResult);
+         },function(error){
+            alert(JSON.stringify(error));
+            deffered.fail(error);
+         });
+         return deferred.promise;
+      };
+
+      //search
+      var searchResult = {};
+      var search = function(sosl){
+       var deferred = $q.defer();
+       remotTKClient.search(sosl,
+         function(response){
+           searchResult = response;
+           deferred.resolve(searchResult);
+         },function(error){
+            alert(JSON.stringify(error));
+            deffered.fail(error);
+         });
+         return deferred.promise;
+      };
+
+
+      /*publicly expose APIs*/
+
+      return {
+        describe: function(objtype){
+          return describe(objtype);
+        },
+        create: function(objtype, fields){
+          return create(objtype, fields);
+        },
+        retrieve: function(objtype, id, fieldlist){
+          return retrieve(objtype, id, fieldlist);
+        },
+        upsert: function(objtype, externalIdField, externalId, fields){
+          return upsert(objtype, externalIdField, externalId, fields);
+        },
+        update: function(objtype, id, fields){
+          return update(objtype, id, fields);
+        },
+        del: function(objtype, id){
+          return del(objtype, id);
+        },
+        query: function(soql){
+          return query(soql);
+        },
+        search: function(sosl){
+          return search(sosl);
+        },
+      }
+    });
+  </script>
+
+</apex:component>
