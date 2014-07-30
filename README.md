@@ -1,4 +1,4 @@
 ngRemoteTK
 ==========
 
-An Angular wrapper for RemoteTK
+An Angular service wrapper for RemoteTK
