@@ -20,52 +20,57 @@ Example of usage
   sidebar="false"
   showheader="false"
   standardStyleSheets="false"
-  Controller="OpportunityRemoter"
   applyHtmlTag="false"
   applyBodyTag="false">
   
   <html ng-app="myApp">
-    <!-- RemoteTK -->
-    <c:RemoteTK />
-    
-    <!-- ngRemoteTK -->
-    <c:ngRemoteTK appNameSpace="myApp" />
-    
-    <script type="text/javascript">
-      //RemoteTK Client
-      var rtkClient = new remotetk.Client();
-      
-      //Angular App
-      var app = angular.module('myApp', ['myApp.services']);
-      
-      //Angular Controller
-      app.controller('myAppCtrl', function ($scope, $q, ngRemoteTK){
-      
-        var acctId = 'some sfdc account id';
-        
-        
-        /* ngRemoteTK magic! */
-        
-        // Retrieve a record example
-        ngRemoteTK.retrieve('account',acctId,'Id, Name, Industry').then(function(response){
-          //We don't want the attributes. We only want the actual fields and values for the object
-          if(response.hasOwnProperty('attributes')){
-            delete response.attributes;
-          }
-          $scope.account = response;
-          console.log('Account: ' + JSON.stringify($scope.account));
-        });
-        
-        // Upsert a record example
-        $scope.submit = function(){ 
-          console.log('Account about to be submitted: ' + JSON.stringify($scope.account));
-          ngRemoteTK.upsert('account', 'Id', acctId, $scope.account);
-        };
+    <head>
+      <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js"></script>
+      <!-- RemoteTK -->
+      <c:RemoteTK />
 
-      });
-    </script>
-    
+      <!-- ngRemoteTK -->
+      <c:ngRemoteTK appNameSpace="myApp" />
+
+      <script type="text/javascript">
+        //RemoteTK Client
+        var rtkClient = new remotetk.Client();
+
+        //Angular App
+        var app = angular.module('myApp', ['myApp.services']);
+
+        //Angular Controller
+        app.controller('myAppCtrl', function ($scope, $q, ngRemoteTK){
+
+          var acctId = 'some sfdc account id';
+
+
+          /* ngRemoteTK magic! */
+
+          // Retrieve a record example
+          ngRemoteTK.retrieve('account',acctId,'Id, Name, Industry').then(function(response){
+            //We don't want the attributes. We only want the actual fields and values for the object
+            if(response.hasOwnProperty('attributes')){
+              delete response.attributes;
+            }
+            $scope.account = response;
+            console.log('Account: ' + JSON.stringify($scope.account));
+          });
+
+          // Upsert a record example
+          $scope.submit = function(){ 
+            console.log('Account about to be submitted: ' + JSON.stringify($scope.account));
+            ngRemoteTK.upsert('account', 'Id', acctId, $scope.account);
+          };
+
+        });
+      </script>
+    </head>
+    <body ng-controller="myAppCtrl">
+      <button type="button" ng-click="submit()">Upsert Test</button>
+    </body>
   </html>
   
-</page>
+</apex:page>
 ```
