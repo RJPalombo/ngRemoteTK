@@ -77,7 +77,7 @@ Example of usage
 
 Special Note
 ------------
-There is a bug in the Salesfoce RemoteTK.component at line 129 under the method "remotetk.Client.prototype.upsert". I've submitted a fix/pull request, but while we are waiting for that to get merged you can simply make this quick change yourself:
+There is a bug in the Salesforce RemoteTK.component at line 129 under the method "remotetk.Client.prototype.upsert". I've submitted a fix/pull request, but while we are waiting for that to get merged you can simply make this quick change yourself:
 
 Change line 129 from:
 '$RemoteAction.RemoteTKController.upser'
